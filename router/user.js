@@ -7,6 +7,7 @@ module.exports = (app) => {
 var saltRounds = 10;
 
 var User = mongoose.model('User');
+var Chat = mongoose.model('Chat');
 
 // Login the user be sending it through the passport middleware
 // then send the user back with a Json web token
@@ -50,6 +51,12 @@ app.post('/postUser', (req, res) => {
                 token: jwt.sign(user._id.toHexString(), process.env.JSONSECRET)
             });
         })
+    });
+
+    app.get('/getChats/:_id', (req, res) => {
+        Chat.find({'users': [mongoose.Types.ObjectId(req.params._id)]}, (err, chats) => {
+            res.json(chats);
+        });
     });
 
     /**

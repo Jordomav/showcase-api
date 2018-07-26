@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // Initialize jwt
-app.use(jwt.authCheck());
+// app.use(jwt.authCheck());
 
 // Initialize and set up passport
 app.use(passport.initialize());

@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken'),
         '/',
         '/userLogin',
         '/postUser',
+        '/newChat',
     ];
 
 module.exports = {
