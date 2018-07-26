@@ -1,12 +1,15 @@
 const express = require('express'),
     app = express(),
     mongo = require('./modules/db'),
+
     routing = require('./modules/routing'),
     passportMiddleware = require('./modules/passport'),
     jwt = require('./modules/jwt'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
-    cors = require('cors');
+    cors = require('cors'),
+    http = require('http').Server(app),
+    io = require('socket.io')(http);
 
 // Require env file
 require('dotenv').config();
@@ -30,9 +33,9 @@ mongo.start(models);
 
 // Require all routing files
 var routesPath = __dirname + '/router/';
-routing.build(routesPath, app);
+routing.build(routesPath, app, io);
 
 // Finally Start the server
-app.listen(process.env.PORT,  () => {
+http.listen(process.env.PORT,  () => {
     console.log('Server running');
 });

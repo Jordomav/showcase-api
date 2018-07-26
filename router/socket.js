@@ -19,17 +19,21 @@ module.exports = (app, io) => {
      * when a chat message is sent be sure to save in into the database
      * and then send the message to the rest of the chat members
      */
-//     Chat.find({}, (err, chats) => {
-//         chats.forEach((chat) => {
-//         io.of(`/${chat.name}`).on('connection', (socket) => {
-//         socket.on('chat message', (msg) => {
-//         Chat.findOne({'name' : msg.chatName}, (err, msgChat) => {
-//         chat.messages.push({user:msg.user, message:msg.message});
-//     chat.save();
-//     io.of(`/${chat.name}`).emit('chat message', {message: msg.message, user:msg.user});
-// });
-// });
-// })
-// })
-// });
+    Chat.find({}, (err, chats) => {
+        chats.forEach((chat) => {
+        io.of(`/${chat.name}`).on('connection', (socket) => {
+            console.log('connection made to: ' + chat.name);
+        socket.on('chat message', (msg) => {
+            console.log(msg);
+        Chat.findOne({'name' : msg.chatName}, (err, msgChat) => {
+        chat.messages.push({user:msg.user, message:msg.message});
+    chat.save();
+    io.of(`/${chat.name}`).emit('chat message', {message: msg.message, user:msg.user});
+});
+});
+})
+})
+});
+
+
 };
